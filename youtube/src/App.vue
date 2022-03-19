@@ -1,21 +1,11 @@
 <template>
   <main class="wrapper">
     <h1 class="header">Youtube Downloader</h1>
-    <Video />
+    <router-view />
   </main>
 </template>
 
 <script>
-
-import Home from './home/Home.vue'
-import Video from './video/Video.vue'
-
-export default {
-  components: {
-    Home,
-    Video
-  }
-}
 </script>
 
 <style scoped>
