@@ -5,16 +5,63 @@
           type="text"
           class="input"
           placeholder="Ej: https://www.youtube.com/watch?v=gkzLAVh8tGM"
+          v-model="link"
         />
       </div>
+      <div class="error" v-if="visibleMessageError">
+        ¡ Lo sentimos, la url no es valida 😫 !
+      </div>
       <div class="main__content_btn">
-        <button class="button">Convertir</button>
+        <button class="button" @click="convertVideo">Convertir</button>
       </div>
     </div>
 </template>
 
 <script>
-export default {};
+
+export default {
+
+  data() {
+    return {
+      link: '',
+      visibleMessageError: false
+    }
+  },
+
+  methods: {
+    async convertVideo() {
+      
+      console.log(this.link)
+
+      //this.$router.push( { path: '/video' } )
+      try {
+        
+        const response = await fetch('http://localhost:3001/video', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'Application/json'
+          },
+          body: JSON.stringify( { link: this.link } )
+        })
+
+        if (response.status === 200) {
+          this.visibleMessageError = false
+          this.$router.push( { path: '/video' } )
+          console.log( { response }  )
+        }
+
+        if (response.status === 400) {
+          this.visibleMessageError = true
+        }
+
+      } catch (error) {
+        console.error('no se pudo hacer la petición')
+      }
+
+    }
+  }
+
+};
 </script>
 
 <style scoped>
@@ -74,6 +121,12 @@ export default {};
   outline: none;
   border: 2px solid #ff3936;
   transition: border ease 0.3s;
+}
+
+.error {
+  font-size: 1rem;
+  font-family: var(--font);
+  color: #f4efef;
 }
 
 @media screen and (min-width: 920px) {
