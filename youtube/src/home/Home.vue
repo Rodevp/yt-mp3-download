@@ -1,6 +1,4 @@
 <template>
-  <main class="wrapper">
-    <h1 class="header">Youtube Downloader</h1>
     <div class="main">
       <div class="main__content_input">
         <input
@@ -13,7 +11,6 @@
         <button class="button">Convertir</button>
       </div>
     </div>
-  </main>
 </template>
 
 <script>
@@ -21,21 +18,6 @@ export default {};
 </script>
 
 <style scoped>
-.wrapper {
-  background-color: #191919;
-  height: 100vh;
-}
-
-.header {
-  height: 15vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-family: var(--font);
-  color: #f4efef;
-  background-color: #ff0400;
-}
-
 .main {
   height: 80vh;
   display: flex;
@@ -55,7 +37,7 @@ export default {};
 }
 
 .button {
-    width: 150px;
+  width: 150px;
   padding: 1em 1em;
   font-size: 0.8rem;
   font-weight: 500;
