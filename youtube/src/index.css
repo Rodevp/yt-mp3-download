@@ -1,0 +1,14 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+@font-face {
+    font-family: 'red-hat';
+    src: url('./font/RedHatDisplay-Medium.ttf');
+}
+
+:root {
+    --font: 'red-hat'
+}
