@@ -1,5 +1,14 @@
 <template>
-    <div class="main">
+  <div class="main">
+    <div class="spinner__content" v-if="showSpinner">
+     <div class="spinner__effect">
+        <Spinner />
+     </div>
+      <p class="spinner__message">
+        Convirtiendo...
+      </p>
+    </div>
+    <section class="content__form" v-if="showForm">
       <div class="main__content_input">
         <input
           type="text"
@@ -14,53 +23,56 @@
       <div class="main__content_btn">
         <button class="button" @click="convertVideo">Convertir</button>
       </div>
-    </div>
+    </section>
+  </div>
 </template>
 
 <script>
 
+import Spinner from '../spinner/Spinner.vue'
+
 export default {
+
+  components: {
+    Spinner
+  },
 
   data() {
     return {
-      link: '',
-      visibleMessageError: false
-    }
+      link: "",
+      visibleMessageError: false,
+      showSpinner: false,
+      showForm: true
+    };
   },
 
   methods: {
     async convertVideo() {
-      
-      console.log(this.link)
 
-      //this.$router.push( { path: '/video' } )
       try {
-        
-        const response = await fetch('http://localhost:3001/video', {
-          method: 'POST',
+        const response = await fetch("http://localhost:3001/video", {
+          method: "POST",
           headers: {
-            'Content-Type': 'Application/json'
+            "Content-Type": "Application/json",
           },
-          body: JSON.stringify( { link: this.link } )
-        })
+          body: JSON.stringify({ link: this.link })
+        });
+        
 
         if (response.status === 200) {
-          this.visibleMessageError = false
-          this.$router.push( { path: '/video' } )
-          console.log( { response }  )
+          this.$router.push({ path: "/video" })
+          console.log({ response })
         }
 
         if (response.status === 400) {
-          this.visibleMessageError = true
+          this.showSpinner = false
         }
 
       } catch (error) {
-        console.error('no se pudo hacer la petición')
+        console.error("no se pudo hacer la petición")
       }
-
-    }
-  }
-
+    },
+  },
 };
 </script>
 
@@ -73,6 +85,14 @@ export default {
   justify-content: center;
 }
 
+.content__form {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .main__content_input,
 .main__content_btn {
   width: 80%;
@@ -81,6 +101,27 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.spinner__content{
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  justify-content: center;
+}
+
+.spinner__effect {
+  width: 80%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.spinner__message {
+  font-size: 2rem;
+  padding: 1em o;
+  font-family: var(--font);
+  color: #f4efef;
 }
 
 .button {
@@ -130,16 +171,13 @@ export default {
 }
 
 @media screen and (min-width: 920px) {
-  
   .main__content_input,
   .main__content_btn {
     width: 55%;
   }
-  
+
   .button {
     width: 180px;
   }
-
 }
-
 </style>
