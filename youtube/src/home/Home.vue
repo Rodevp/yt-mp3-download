@@ -3,7 +3,11 @@
     <h1 class="header">Youtube Downloader</h1>
     <div class="main">
       <div class="main__content_input">
-        <input type="text"  class="input" placeholder="Ej: https://www.youtube.com/watch?v=gkzLAVh8tGM"/>
+        <input
+          type="text"
+          class="input"
+          placeholder="Ej: https://www.youtube.com/watch?v=gkzLAVh8tGM"
+        />
       </div>
       <div class="main__content_btn">
         <button class="button">Convertir</button>
@@ -33,23 +37,25 @@ export default {};
 }
 
 .main {
-    height: 80vh;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
-.main__content_input, .main__content_btn {
-    width: 80%;
-    padding: 1em 0;
-    margin-bottom: 0.5rem;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.main__content_input,
+.main__content_btn {
+  width: 80%;
+  padding: 1em 0;
+  margin-bottom: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .button {
+    width: 150px;
   padding: 1em 1em;
   font-size: 0.8rem;
   font-weight: 500;
@@ -76,16 +82,29 @@ export default {};
 }
 
 .input {
-    width: 100%;
-    padding: 0.8em;
-    border-radius: 0.5rem;
-    font-family: var(--font);
+  width: 100%;
+  padding: 0.8em;
+  border-radius: 0.5rem;
+  font-family: var(--font);
 }
 
 .input:focus {
-    outline: none;
-    border: 2px solid #ff3936;
-    transition: border ease 0.3s;
+  outline: none;
+  border: 2px solid #ff3936;
+  transition: border ease 0.3s;
+}
+
+@media screen and (min-width: 920px) {
+  
+  .main__content_input,
+  .main__content_btn {
+    width: 55%;
+  }
+  
+  .button {
+    width: 180px;
+  }
+
 }
 
 </style>
