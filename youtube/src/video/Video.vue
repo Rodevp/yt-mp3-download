@@ -2,21 +2,60 @@
   <section class="video">
     <section class="video__card">
       <div class="video__img">
-        <img src="../assets/barca.jpg" alt="image of video" />
+        <img :src="img" alt="image of video" />
       </div>
       <div class="video__info">
-        <p class="video__info_item">200 likes</p>
-        <p class="video__info_item">LALALAND</p>
+        <p class="video__info_item">{{ likes }} likes</p>
+        <p class="video__info_item">{{ title }}</p>
       </div>
       <div class="video__content_btn">
-        <a href="#" class="button">Descargar</a>
+        <a
+          :href="mediaLink"
+          class="button"
+          download
+          >Descargar</a
+        >
       </div>
     </section>
   </section>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      title: "",
+      img: "",
+      mediaLink: "",
+      likes: 0,
+    };
+  },
+
+  methods: {
+    async getVideoInfo() {
+      try {
+        const response = await fetch("http://localhost:3001/video");
+
+        if (response.status === 200) {
+
+          const data = await response.json();
+          this.img = data.img;
+          this.likes = data.likes;
+          this.title = data.title;
+          this.mediaLink = data.mediaLink;
+        
+        }
+
+      } catch (error) {
+        console.error("no se pudo hacer la petición");
+      }
+    },
+  },
+
+  async mounted() {
+    this.getVideoInfo();
+  },
+};
 </script>
 
 <style scoped>
@@ -100,33 +139,32 @@ export default {};
 }
 
 @media screen and (min-width: 520px) {
-    .video__card {
-         width: 70%;
-    }
+  .video__card {
+    width: 70%;
+  }
 }
 
 @media screen and (min-width: 620px) {
-    .video__card {
-         width: 60%;
-    }
+  .video__card {
+    width: 60%;
+  }
 }
 
 @media screen and (min-width: 720px) {
-    .video__card {
-         width: 50%;
-    }
+  .video__card {
+    width: 50%;
+  }
 }
 
 @media screen and (min-width: 920px) {
-    .video__card {
-         width: 40%;
-    }
+  .video__card {
+    width: 40%;
+  }
 }
 
 @media screen and (min-width: 1020px) {
-    .video__card {
-         width: 30%;
-    }
+  .video__card {
+    width: 30%;
+  }
 }
-
 </style>
