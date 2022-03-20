@@ -50,7 +50,7 @@ export default {
     async convertVideo() {
 
       try {
-        const response = await fetch("http://localhost:3001/video", {
+        const response = await fetch("https://fathomless-forest-26783.herokuapp.com/video", {
           method: "POST",
           headers: {
             "Content-Type": "Application/json",

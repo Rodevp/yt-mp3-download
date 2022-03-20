@@ -1,6 +1,7 @@
 <template>
   <section class="video">
     <section class="video__card">
+      {{videoID}}
       <div class="video__img">
         <img :src="img" alt="image of video" />
       </div>
@@ -15,6 +16,9 @@
           >Descargar</button
         >
       </div>
+      <p class="message__download" v-if="showMessage">
+        Puede tardar unos segunditos... 🙈
+      </p>
     </section>
   </section>
 </template>
@@ -30,14 +34,15 @@ export default {
       img: "",
       mediaLink: "",
       likes: 0,
-      videoID: ''
+      videoID: '',
+      showMessage: false
     };
   },
 
   methods: {
     async getVideoInfo() {
       try {
-        const response = await fetch("http://localhost:3001/video");
+        const response = await fetch("https://fathomless-forest-26783.herokuapp.com/video");
 
         if (response.status === 200) {
 
@@ -47,6 +52,9 @@ export default {
           this.title = data.title;
           this.mediaLink = data.mediaLink;
           this.videoID = data.idVideo
+
+          console.log(this.mediaLink)
+
         }
 
       } catch (error) {
@@ -56,6 +64,7 @@ export default {
 
     downloadAudio() {
       saveAs(this.mediaLink, `${this.title}.mp3`)
+      this.showMessage = true
     }
 
   },
@@ -67,6 +76,13 @@ export default {
 </script>
 
 <style scoped>
+
+.message__download {
+  font-size: 1rem;
+  color: #f4efef;
+  font-family: var(--font);
+}
+
 .video {
   width: 100%;
   height: 80vh;
