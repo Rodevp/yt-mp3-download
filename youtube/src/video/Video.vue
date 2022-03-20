@@ -9,11 +9,10 @@
         <p class="video__info_item">{{ title }}</p>
       </div>
       <div class="video__content_btn">
-        <a
-          :href="mediaLink"
+        <button
+          @click="downloadAudio"
           class="button"
-          download
-          >Descargar</a
+          >Descargar</button
         >
       </div>
     </section>
@@ -21,6 +20,9 @@
 </template>
 
 <script>
+
+import { saveAs } from 'file-saver'
+
 export default {
   data() {
     return {
@@ -28,6 +30,7 @@ export default {
       img: "",
       mediaLink: "",
       likes: 0,
+      videoID: ''
     };
   },
 
@@ -43,13 +46,18 @@ export default {
           this.likes = data.likes;
           this.title = data.title;
           this.mediaLink = data.mediaLink;
-        
+          this.videoID = data.idVideo
         }
 
       } catch (error) {
         console.error("no se pudo hacer la petición");
       }
     },
+
+    downloadAudio() {
+      saveAs(this.mediaLink, `${this.title}.mp3`)
+    }
+
   },
 
   async mounted() {

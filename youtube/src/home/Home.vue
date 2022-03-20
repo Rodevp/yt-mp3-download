@@ -60,12 +60,16 @@ export default {
         
 
         if (response.status === 200) {
-          this.$router.push({ path: "/video" })
+          this.showSpinner = true
+          this.showForm = false
+          setTimeout(() => {
+            this.$router.push({ path: "/video" })
+          }, 10000)
           console.log({ response })
         }
 
         if (response.status === 400) {
-          this.showSpinner = false
+          this.visibleMessageError = true
         }
 
       } catch (error) {
