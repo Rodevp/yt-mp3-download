@@ -1,7 +1,6 @@
 <template>
   <section class="video">
     <section class="video__card">
-      {{videoID}}
       <div class="video__img">
         <img :src="img" alt="image of video" />
       </div>
@@ -10,11 +9,7 @@
         <p class="video__info_item">{{ title }}</p>
       </div>
       <div class="video__content_btn">
-        <button
-          @click="downloadAudio"
-          class="button"
-          >Descargar</button
-        >
+        <button @click="downloadAudio" class="button">Descargar</button>
       </div>
       <p class="message__download" v-if="showMessage">
         Puede tardar unos segunditos... 🙈
@@ -24,8 +19,7 @@
 </template>
 
 <script>
-
-import { saveAs } from 'file-saver'
+import { saveAs } from "file-saver";
 
 export default {
   data() {
@@ -34,49 +28,70 @@ export default {
       img: "",
       mediaLink: "",
       likes: 0,
-      videoID: '',
-      showMessage: false
+      videoID: "",
+      showMessage: false,
+      idTimeout: 0,
     };
   },
 
   methods: {
     async getVideoInfo() {
       try {
-        const response = await fetch("https://fathomless-forest-26783.herokuapp.com/video");
+        const response = await fetch(
+          `https://polar-retreat-04930.herokuapp.com/video/`
+        );
 
         if (response.status === 200) {
-
           const data = await response.json();
           this.img = data.img;
           this.likes = data.likes;
           this.title = data.title;
           this.mediaLink = data.mediaLink;
-          this.videoID = data.idVideo
-
-          console.log(this.mediaLink)
-
+          this.videoID = data.idVideo;
         }
-
       } catch (error) {
         console.error("no se pudo hacer la petición");
       }
     },
 
     downloadAudio() {
-      saveAs(this.mediaLink, `${this.title}.mp3`)
-      this.showMessage = true
-    }
+      saveAs(this.mediaLink, `${this.title}.mp3`);
+      this.showMessage = true;
+      this.destroyVideo();
+    },
 
+    async destroyVideo() {
+      
+      try {
+        const res = await fetch(
+          `https://polar-retreat-04930.herokuapp.com/video/${this.videoID}`,
+          {
+            method: "DELETE",
+          }
+        )
+        console.log(res.status)
+      } catch (error) {
+        console.error("algo")
+      }
+
+      this.idTimeout = setTimeout(() => {
+        this.$router.push('/')
+      }, 1500)
+
+    },
   },
 
   async mounted() {
-    this.getVideoInfo();
+    this.getVideoInfo()
+  },
+
+  async unmounted() {
+    setTimeout(this.idTimeout)
   },
 };
 </script>
 
 <style scoped>
-
 .message__download {
   font-size: 1rem;
   color: #f4efef;

@@ -50,7 +50,7 @@ export default {
     async convertVideo() {
 
       try {
-        const response = await fetch("https://fathomless-forest-26783.herokuapp.com/video", {
+        const response = await fetch(`https://polar-retreat-04930.herokuapp.com/video`, {
           method: "POST",
           headers: {
             "Content-Type": "Application/json",
@@ -60,12 +60,16 @@ export default {
         
 
         if (response.status === 200) {
+
           this.showSpinner = true
           this.showForm = false
+
           setTimeout(() => {
             this.$router.push({ path: "/video" })
           }, 10000)
+
           console.log({ response })
+
         }
 
         if (response.status === 400) {
